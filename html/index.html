@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Personal Administration</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+        }
+
+        h2 {
+            color: #475569;
+            font-size: 18px;
+            margin-top: 30px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .task input {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .task:has(input:checked) {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .progress {
+            text-align: center;
+            margin-top: 25px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>My Daily Routine</h1>
+
+        <h2>Morning Routine</h2>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            WAKE UP
+        </div>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            BED
+        </div>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            SHOWER
+        </div>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            CLOTHES
+        </div>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            PRAY
+        </div>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            WATER
+        </div>
+
+        <div class="progress" id="progress">
+            Completed: 0 / 6
+        </div>
+
+        <button onclick="resetRoutine()">
+            RESET ROUTINE
+        </button>
+
+    </div>
+
+    <div class="container">
+
+        <h2>Make Coffee</h2>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            Minute Data
+        </div>
+
+        <button onclick="resetRoutine()">
+            RESET ROUTINE
+        </button>
+
+    </div>
+
+    <script>
+        function updateProgress() {
+
+            const tasks = document.querySelectorAll('.task input');
+
+            let completed = 0;
+
+            tasks.forEach(task => {
+                if (task.checked) {
+                    completed++;
+                }
+            });
+
+            document.getElementById('progress').textContent =
+                `Completed: ${completed} / ${tasks.length}`;
+        }
+
+        function resetRoutine() {
+
+            const tasks = document.querySelectorAll('.task input');
+
+            tasks.forEach(task => {
+                task.checked = false;
+            });
+
+            updateProgress();
+        }
+    </script>
+
+</body>
+</html>
