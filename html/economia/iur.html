@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f1f5f9">
+    <title>INVERSIONES UREÑA RECIO — Administrador de tareas</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1e293b;
+            background: #f1f5f9;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 32px 18px;
+        }
+
+        .container {
+            width: min(100%, 760px);
+            margin: 0 auto;
+            padding: clamp(22px, 5vw, 38px);
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 28px rgba(15, 23, 42, .08);
+        }
+
+        h1 {
+            margin: 0;
+            color: #1e293b;
+            text-align: center;
+            font-size: clamp(1.7rem, 5vw, 2.2rem);
+        }
+
+        .subtitle {
+            margin: 9px 0 25px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .progress-card {
+            padding: 16px 18px;
+            margin-bottom: 26px;
+            background: #eff6ff;
+            border-radius: 12px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+            color: #1d4ed8;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .progress-track {
+            height: 10px;
+            overflow: hidden;
+            background: #dbeafe;
+            border-radius: 999px;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            background: #2563eb;
+            border-radius: inherit;
+            transition: width .2s ease;
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .task-section {
+            min-width: 0;
+            padding: 17px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+        }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 0 0 14px;
+            color: #475569;
+            font-size: 1rem;
+        }
+
+        .count {
+            min-width: 27px;
+            padding: 4px 8px;
+            color: #475569;
+            background: #e2e8f0;
+            border-radius: 999px;
+            text-align: center;
+            font-size: .8rem;
+        }
+
+        .task-list { min-height: 45px; }
+
+        .task {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            color: #334155;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: .95rem;
+            font-weight: 700;
+            line-height: 1.45;
+            transition: background .2s ease, border-color .2s ease;
+        }
+
+        .task:last-child { margin-bottom: 0; }
+        .task:hover { border-color: #93c5fd; }
+
+        .task input {
+            flex: 0 0 auto;
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            accent-color: #16a34a;
+            cursor: pointer;
+        }
+
+        .completed .task {
+            color: #166534;
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .empty-message {
+            margin: 10px 0 2px;
+            color: #94a3b8;
+            text-align: center;
+            font-size: .9rem;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 13px 18px;
+            margin-top: 25px;
+            color: #fff;
+            background: #2563eb;
+            border: 0;
+            border-radius: 9px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        button:hover { background: #1d4ed8; }
+        button:focus-visible, input:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+
+        @media (max-width: 600px) {
+            body { padding: 18px 12px; }
+            .sections { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>INVERSIONES UREÑA RECIO</h1>
+        <p class="subtitle">Organiza tus tareas y sigue tu avance</p>
+
+        <section class="progress-card" aria-label="Progreso de tareas">
+            <div class="progress-label">
+                <span id="progressText">0 de 5 tareas completadas</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progressTrack">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </section>
+
+        <div class="sections">
+            <section class="task-section" aria-labelledby="pendingHeading">
+                <h2 id="pendingHeading">Tareas pendientes <span class="count" id="pendingCount">5</span></h2>
+                <div class="task-list" id="pendingTasks">
+                    <label class="task"><input type="checkbox"><span>SAMUEL_PÉREZ_GUERRERO</span></label>
+                    <label class="task"><input type="checkbox"><span>JUAN_DOMINGO_BELTRÉ_RECIO</span></label>
+                    <label class="task"><input type="checkbox"><span>SERGIO_LEONEL_DE_LEÓN_RECIO</span></label>
+                    <label class="task"><input type="checkbox"><span>RODOLFO_ALFREDO_BELTRÉ_RECIO</span></label>
+                    <label class="task"><input type="checkbox"><span>SAURYS_BELTRÉ_OGANDO</span></label>
+                    <label class="task"><input type="checkbox"><span>JESUS MARIÑEZ</span></label>
+                </div>
+            </section>
+
+            <section class="task-section completed" aria-labelledby="completedHeading">
+                <h2 id="completedHeading">Tareas realizadas <span class="count" id="completedCount">0</span></h2>
+                <div class="task-list" id="completedTasks"></div>
+                <p class="empty-message" id="emptyMessage">Todavía no has completado tareas.</p>
+            </section>
+        </div>
+
+        <button type="button" id="resetButton">REINICIAR TAREAS</button>
+    </main>
+
+    <script>
+        const pendingTasks = document.getElementById('pendingTasks');
+        const completedTasks = document.getElementById('completedTasks');
+        const emptyMessage = document.getElementById('emptyMessage');
+        const totalTasks = document.querySelectorAll('.task').length;
+
+        function updateProgress() {
+            const completed = completedTasks.querySelectorAll('.task').length;
+            const pending = totalTasks - completed;
+            const percentage = totalTasks === 0 ? 0 : Math.round((completed / totalTasks) * 100);
+
+            document.getElementById('progressText').textContent = `${completed} de ${totalTasks} tareas completadas`;
+            document.getElementById('progressPercent').textContent = `${percentage}%`;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('progressTrack').setAttribute('aria-valuenow', completed);
+            document.getElementById('progressTrack').setAttribute('aria-valuemax', totalTasks);
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('completedCount').textContent = completed;
+            emptyMessage.hidden = completed > 0;
+        }
+
+        document.addEventListener('change', (event) => {
+            if (!event.target.matches('.task input[type="checkbox"]')) return;
+
+            const taskCard = event.target.closest('.task');
+            const destination = event.target.checked ? completedTasks : pendingTasks;
+            destination.appendChild(taskCard);
+            updateProgress();
+        });
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            const allTasks = [...pendingTasks.querySelectorAll('.task'), ...completedTasks.querySelectorAll('.task')];
+            allTasks.forEach((taskCard) => {
+                taskCard.querySelector('input').checked = false;
+                pendingTasks.appendChild(taskCard);
+            });
+            updateProgress();
+        });
+
+        updateProgress();
+    </script>
+</body>
+</html>

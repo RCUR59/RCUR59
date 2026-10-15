@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+a
+b
+c
+-->
+
+<alumnos>
+    <alumno ID="1">
+        <nombre>Juan</nombre>
+        <apellido>Pérez</apellido>
+        <edad>20</edad>
+        <curso>Matemáticas</curso>
+    </alumno>
+    <alumno ID="2">
+        <nombre>María</nombre>
+        <apellido>Gómez</apellido>
+        <edad>22</edad>
+        <curso>Física</curso>
+    </alumno>
+
+</alumnos>

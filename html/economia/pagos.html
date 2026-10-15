@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAYMENTS - Personal Administration</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 25px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 30px;
+        }
+
+        .summary {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 180px;
+            box-shadow: 0 2px 8px #0000000d;
+        }
+
+        .summary-card p {
+            margin: 0 0 10px;
+            color: #64748b;
+        }
+
+        .summary-card strong {
+            font-size: 22px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px #0000000d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 550px;
+        }
+
+        th {
+            background: #1e293b;
+            color: white;
+            text-align: left;
+            padding: 14px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .payment-name {
+            min-width: 220px;
+        }
+
+        .payment-name label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .payment-name input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .payment-name a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .payment-name a:hover {
+            text-decoration: underline;
+        }
+
+        .editable {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+            background: #fff;
+        }
+
+        .day-input {
+            max-width: 90px;
+        }
+
+        .amount-input {
+            min-width: 130px;
+            text-align: right;
+        }
+
+        .paid-section th {
+            background: #166534;
+        }
+
+        .paid-section .payment-name label {
+            color: #15803d;
+        }
+
+        .paid-section .payment-name label span {
+            text-decoration: line-through;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #94a3b8;
+            padding: 20px;
+        }
+
+        .reset-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #475569;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .reset-button:hover {
+            background: #334155;
+        }
+
+        .note {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            .summary-card strong {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>PAYMENTS</h1>
+
+    <div class="summary">
+
+        <div class="summary-card">
+            <p>TOTAL PAYMENTS</p>
+            <strong id="totalAmount">$0.00</strong>
+        </div>
+
+        <div class="summary-card">
+            <p>PENDING BALANCE</p>
+            <strong id="pendingAmount">$0.00</strong>
+        </div>
+
+        <div class="summary-card">
+            <p>PAID AMOUNT</p>
+            <strong id="paidAmount">$0.00</strong>
+        </div>
+
+    </div>
+
+    <h2>📋 PENDING PAYMENTS</h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>PAYMENTS</th>
+                    <th>DUE DAY</th>
+                    <th>AMOUNT ($)</th>
+                </tr>
+            </thead>
+
+            <tbody id="pendingTasks"></tbody>
+        </table>
+    </div>
+
+    <h2>✅ PAID PAYMENTS</h2>
+
+    <div class="table-container paid-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>PAYMENTS</th>
+                    <th>DUE DAY</th>
+                    <th>AMOUNT ($)</th>
+                </tr>
+            </thead>
+
+            <tbody id="completedTasks"></tbody>
+        </table>
+    </div>
+
+    <button class="reset-button" onclick="resetPayments()">
+        RESET ALL PAYMENTS
+    </button>
+
+    <p class="note">
+        Click a checkbox to move a payment between Pending and Paid.
+        You can edit the due day and amount directly in the table.
+    </p>
+
+</div>
+
+<script>
+    const payments = [
+        {
+            name: "QIK - CARD - CORTE - 15",
+            day: 12,
+            amount: 43000
+        },
+        {
+            name: "BSC - LOAN",
+            day: 11,
+            amount: 10700,
+            url: "https://bscenlinea.com.do/onlinebanking"
+        },
+        {
+            name: "BHD - LINEA",
+            day: 11,
+            amount: 4982.85,
+            url: "https://ibp.bhd.com.do/#/bhd/product-detail"
+        },
+        {
+            name: "CARIBE DISC GOLF",
+            day: 19,
+            amount: 16000
+        },
+        {
+            name: "EDENORTE",
+            day: 21,
+            amount: 801.42,
+            url: "https://ofv.edenorte.com.do/"
+        },
+        {
+            name: "CIBAO - CARD",
+            day: 25,
+            amount: 47131.59
+        },
+        {
+            name: "BPD - LOAN",
+            day: 25,
+            amount: 16287.97,
+            url: "https://ib.bpd.com.do/"
+        },
+        {
+            name: "BSC - CREDIT CARD",
+            day: 27,
+            amount: 1000,
+            url: "https://bscenlinea.com.do/onlinebanking"
+        },
+        {
+            name: "CARLOS",
+            day: 30,
+            amount: 5500
+        },
+        {
+            name: "RYAN / RAEL",
+            day: 30,
+            amount: 5000
+        },
+        {
+            name: "HOUSE",
+            day: 30,
+            amount: 12000
+        },
+        {
+            name: "INTERNET",
+            day: 30,
+            amount: 1000
+        },
+        {
+            name: "QIK - LOAN",
+            day: 30,
+            amount: 4000
+        },
+        {
+            name: "CLARO",
+            day: 25,
+            amount: 1155,
+            url: "https://miclaro.claro.com.do/#/Pagina-Inicio"
+        }
+    ];
+
+    const pendingTasks = document.getElementById("pendingTasks");
+    const completedTasks = document.getElementById("completedTasks");
+
+    function formatMoney(amount) {
+        return amount.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    function parseAmount(value) {
+        const normalized = value.replace(/[$,\s]/g, "");
+        const amount = Number(normalized);
+        return normalized !== "" && Number.isFinite(amount) && amount >= 0
+            ? amount
+            : 0;
+    }
+
+    function createRow(payment, index) {
+        const row = document.createElement("tr");
+        row.dataset.index = index;
+
+        const nameCell = document.createElement("td");
+        nameCell.className = "payment-name";
+
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+
+        checkbox.type = "checkbox";
+        checkbox.checked = Boolean(payment.paid);
+
+        checkbox.addEventListener("change", function () {
+            payments[index].paid = checkbox.checked;
+            moveRow(row, checkbox.checked);
+            updateTotals();
+        });
+
+        const nameSpan = document.createElement("span");
+
+        if (payment.url) {
+            const link = document.createElement("a");
+            link.href = payment.url;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = payment.name;
+            nameSpan.appendChild(link);
+        } else {
+            nameSpan.textContent = payment.name;
+        }
+
+        label.append(checkbox, nameSpan);
+        nameCell.appendChild(label);
+
+        const dayCell = document.createElement("td");
+        const dayInput = document.createElement("input");
+
+        dayInput.type = "number";
+        dayInput.min = "1";
+        dayInput.max = "31";
+        dayInput.step = "1";
+        dayInput.value = payment.day;
+        dayInput.className = "editable day-input";
+        dayInput.setAttribute("aria-label", "Due day for " + payment.name);
+
+        dayInput.addEventListener("change", function () {
+            const day = Number(dayInput.value);
+
+            if (Number.isInteger(day) && day >= 1 && day <= 31) {
+                payments[index].day = day;
+            } else {
+                dayInput.value = payments[index].day;
+            }
+        });
+
+        dayCell.appendChild(dayInput);
+
+        const amountCell = document.createElement("td");
+        const amountInput = document.createElement("input");
+
+        amountInput.type = "text";
+        amountInput.inputMode = "decimal";
+        amountInput.value = formatMoney(payment.amount);
+        amountInput.className = "editable amount-input";
+        amountInput.setAttribute("aria-label", "Amount for " + payment.name);
+
+        amountInput.addEventListener("change", function () {
+            const amount = parseAmount(amountInput.value);
+
+            payments[index].amount = amount;
+            amountInput.value = formatMoney(amount);
+            updateTotals();
+        });
+
+        amountCell.appendChild(amountInput);
+
+        row.append(nameCell, dayCell, amountCell);
+
+        return row;
+    }
+
+    function moveRow(row, isPaid) {
+        const target = isPaid ? completedTasks : pendingTasks;
+        target.appendChild(row);
+    }
+
+    function renderPayments() {
+        pendingTasks.innerHTML = "";
+        completedTasks.innerHTML = "";
+
+        payments.forEach(function (payment, index) {
+            const row = createRow(payment, index);
+            moveRow(row, Boolean(payment.paid));
+        });
+
+        updateTotals();
+    }
+
+    function updateTotals() {
+        let total = 0;
+        let pending = 0;
+        let paid = 0;
+
+        payments.forEach(function (payment) {
+            total += payment.amount;
+
+            if (payment.paid) {
+                paid += payment.amount;
+            } else {
+                pending += payment.amount;
+            }
+        });
+
+        document.getElementById("totalAmount").textContent =
+            "$" + formatMoney(total);
+
+        document.getElementById("pendingAmount").textContent =
+            "$" + formatMoney(pending);
+
+        document.getElementById("paidAmount").textContent =
+            "$" + formatMoney(paid);
+    }
+
+    function resetPayments() {
+        const confirmReset = confirm(
+            "Are you sure you want to move all payments back to Pending?"
+        );
+
+        if (!confirmReset) {
+            return;
+        }
+
+        payments.forEach(function (payment) {
+            payment.paid = false;
+        });
+
+        renderPayments();
+    }
+
+    renderPayments();
+</script>
+
+</body>
+</html>

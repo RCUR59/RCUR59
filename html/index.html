@@ -8,20 +8,42 @@
 
     <title>My Personal Administration</title>
 
-    <style>
+<!-- Este es el CSS que se aplica a todas las páginas de la administración personal-->     
+<style>
+    <!-- Este es el CSS que se aplica a todas las páginas de la administración personal-->
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }   
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f5f9;
+            font-family: Arial, sans-serif, Helvetica, sans-serif;
+            background-color: #98a4b1;
             margin: 0;
             padding: 30px;
         }
+        header {
+            height: 100px;
+            background-color: #2d5aa3;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            line-height: 100px;
+        }
 
+        aside {
+            width: 200px;
+            background-color: #f1f5f9;
+            padding: 15px;
+            float: left;
+            margin-right: 20px;
+        }
         .container {
             max-width: 500px;
             margin: auto;
-            background: white;
+            background: rgb(175, 165, 165);
             padding: 30px;
-            border-radius: 15px;
+            border-radius: 15px solid #6d2727;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
@@ -82,10 +104,28 @@
         button:hover {
             background: #1d4ed8;
         }
-    </style>
+</style>
+
 </head>
 
 <body>
+
+    <header>
+        <h1>My Personal Administration</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="http://">Home</a></li>
+            <li><a href="http://">About</a></li>
+            <li><a href="http://">Contact</a></li>
+        </ul>
+    </nav>
+
+    <aside>
+        <h2>Sidebar</h2>
+        <p>This is a sidebar content.</p>
+    </aside>
 
     <div class="container">
 
@@ -131,6 +171,7 @@
             RESET ROUTINE
         </button>
 
+   
     </div>
 
     <div class="container">
@@ -148,7 +189,7 @@
 
     </div>
 
-        <div class="container">
+    <div class="container">
 
         <h2>Drink Coffee</h2>
 
@@ -179,9 +220,7 @@
 
     </div>
 
-    </div>
-
-        <div class="container">
+    <div class="container">
 
         <h2>Inspiration</h2>
 
@@ -191,17 +230,116 @@
         </div>
         <div class="task">
             <input type="checkbox" onchange="updateProgress()">
-            Objest
+            Object
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            Woman
         </div>
         <div class="task">
             <input type="checkbox" onchange="updateProgress()">
             Sport
+        </div>
+
+        <button onclick="resetRoutine()">
+            RESET ROUTINE
+        </button>
+
+    </div>
+
+    <div class="container">
+
+        <h2>Focus</h2>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            WHATAPP
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            RELEVANTE NO LEIDOS
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            GANADORES DE TIEMPO
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            CHAT GPT - SECRETARIA
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            Principios
         </div>
         <button onclick="resetRoutine()">
             RESET ROUTINE
         </button>
 
     </div>
+
+    <div class="container">
+
+        <h2>CHECKS</h2>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="https://app.airtm.com/login" target="_blank" rel="noopener noreferrer">AIR TM</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="ms-outlook://">CORREOS</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="https://app.airtm.com/login" target="_blank" rel="noopener noreferrer"></a>CALENDARIO</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="http://127.0.0.1:5500/html/economia/iur.html" target="_blank" rel="noopener noreferrer">INVERSIONES UREÑA</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="https://www.facebook.com/marketplace/inbox?targetTab=SELLER" target="_blank" rel="noopener noreferrer">REAL ESTATE</a>
+        </div>
+        <button onclick="resetRoutine()">
+            RESET ROUTINE
+        </button>
+
+    </div>
+
+    <div class="container">
+
+        <h2>TASKS</h2>
+
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="http://127.0.0.1:5500/html/economia/pagos.html" target="_blank" rel="noopener noreferrer">PAGOS</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="http://127.0.0.1:5500/html/salud.html" target="_blank" rel="noopener noreferrer">SALUD</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="http://127.0.0.1:5500/html/economia/economia.html" target="_blank" rel="noopener noreferrer">ECONOMIA</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="http://127.0.0.1:5500/html/tareas.html" target="_blank" rel="noopener noreferrer">TAREAS</a>
+        </div>
+        <div class="task">
+            <input type="checkbox" onchange="updateProgress()">
+            <a href="http://127.0.0.1:5500/html/economia/realstate.html" target="_blank" rel="noopener noreferrer">CONTROL</a>
+        </div>
+        <button onclick="resetRoutine()">
+            RESET ROUTINE
+        </button>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2020 Robert Ureña Personal Administration. All rights reserved.</p> 
+    </footer>
 
     <script>
         function updateProgress() {
@@ -233,4 +371,5 @@
     </script>
 
 </body>
+
 </html>
