@@ -1,0 +1,6 @@
+{
+  "name": "Vitanova - Gestión Integral de Vida",
+  "description": "Plataforma centralizada para la administración personal: gestión de tareas, finanzas, salud y bienestar, y objetivos personales en un solo lugar.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
